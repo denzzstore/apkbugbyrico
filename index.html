@@ -1,0 +1,1069 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+#app{font-family:'Outfit',system-ui,sans-serif;color:#f3e9ff;max-width:700px;margin:0 auto;position:relative;z-index:1;padding:0 0 34px;min-height:520px}
+
+.bgwrap{position:relative;max-width:700px;margin:0 auto}
+.aurora{position:absolute;inset:-40px -20px auto -20px;height:340px;z-index:0;pointer-events:none;overflow:hidden;border-radius:0 0 40px 40px}
+.aurora:before{content:'';position:absolute;width:420px;height:420px;left:-90px;top:-180px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.55),transparent 68%);filter:blur(38px);animation:drift 14s ease-in-out infinite alternate}
+.aurora:after{content:'';position:absolute;width:380px;height:380px;right:-110px;top:-150px;border-radius:50%;background:radial-gradient(circle,rgba(217,70,239,.45),transparent 68%);filter:blur(40px);animation:drift2 17s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(60px,50px) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-50px,60px) scale(1.2)}}
+
+.login{padding:52px 22px 30px;display:flex;flex-direction:column;align-items:center;animation:fade .5s ease}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.logo{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:500;letter-spacing:.5px;text-align:center;line-height:1.35;
+  background:linear-gradient(96deg,#e9d5ff,#c084fc 40%,#f0abfc 75%,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 34px rgba(192,132,252,.35);word-break:break-word}
+.crown{width:74px;height:74px;border-radius:24px;display:grid;place-items:center;margin-bottom:18px;
+  background:linear-gradient(150deg,rgba(168,85,247,.32),rgba(124,58,237,.12));border:1px solid rgba(192,132,252,.4);
+  box-shadow:0 0 44px rgba(168,85,247,.4),inset 0 1px 0 rgba(255,255,255,.14)}
+.sub{color:#b79ad6;font-size:13px;margin-top:8px;letter-spacing:.3px;text-align:center}
+.tagline{font-size:11px;color:#8b6fb0;letter-spacing:2.6px;text-transform:uppercase;margin-top:14px;text-align:center}
+
+.box{width:100%;max-width:372px;margin-top:26px;background:linear-gradient(180deg,rgba(30,15,54,.94),rgba(18,9,34,.96));
+  border:1px solid rgba(147,51,234,.32);border-radius:22px;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.lbl{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#a688c9;margin:0 0 7px 2px;font-weight:500}
+.field{display:flex;align-items:center;gap:9px;background:rgba(10,4,20,.8);border:1px solid rgba(147,51,234,.26);
+  border-radius:13px;padding:0 12px;margin-bottom:14px;transition:.2s}
+.field:focus-within{border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.16)}
+.field svg{flex:0 0 auto;opacity:.6}
+.field input{flex:1;background:none;border:0;outline:0;color:#f3e9ff;font:inherit;font-size:15px;padding:13px 0}
+.field input::placeholder{color:#7a5f9c}
+.eye{background:none;border:0;color:#a688c9;cursor:pointer;padding:6px;font-size:14px}
+
+.btn{width:100%;border:0;border-radius:13px;padding:14px;font:inherit;font-weight:600;font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:.18s;letter-spacing:.2px;text-decoration:none}
+.btn-p{background:linear-gradient(100deg,#8b5cf6,#c026d3);color:#fff;box-shadow:0 10px 28px rgba(168,85,247,.38)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(192,38,211,.45)}
+.btn-p:active{transform:scale(.985)}
+.btn-g{background:rgba(147,51,234,.14);color:#e9d5ff;border:1px solid rgba(147,51,234,.34)}
+.btn-g:hover{background:rgba(147,51,234,.24)}
+.btn-d{background:rgba(244,63,94,.14);color:#fda4af;border:1px solid rgba(244,63,94,.3)}
+.btn-d:hover{background:rgba(244,63,94,.24)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.btn.sm{padding:9px 12px;font-size:13px;border-radius:10px}
+
+.err{background:rgba(244,63,94,.12);border:1px solid rgba(244,63,94,.32);color:#fda4af;font-size:12.5px;
+  padding:10px 12px;border-radius:11px;margin-bottom:13px;display:none;animation:shake .35s}
+.err.on{display:block}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+.head{position:relative;z-index:2;padding:16px 18px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:'JetBrains Mono',monospace;font-size:15px;line-height:1.3;
+  background:linear-gradient(96deg,#e9d5ff,#c084fc,#f0abfc);-webkit-background-clip:text;background-clip:text;color:transparent;word-break:break-word}
+.who{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.av{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:14px;color:#fff;
+  background:linear-gradient(150deg,#a855f7,#7c3aed);border:1px solid rgba(233,213,255,.35);box-shadow:0 0 18px rgba(168,85,247,.45)}
+.av.own{background:linear-gradient(150deg,#fbbf24,#d97706);box-shadow:0 0 18px rgba(251,191,36,.5)}
+.nm{font-size:12.5px;font-weight:600;line-height:1.2}
+.rl{font-size:9.5px;letter-spacing:1.3px;text-transform:uppercase;color:#a688c9}
+.rl.own{color:#fbbf24}
+
+.tabs{display:flex;gap:7px;padding:6px 16px 10px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid rgba(147,51,234,.28);background:rgba(30,15,54,.7);color:#c9aee6;
+  padding:9px 15px;border-radius:11px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:.18s;display:flex;gap:6px;align-items:center}
+.tab:hover{border-color:rgba(192,132,252,.55);color:#f3e9ff}
+.tab.on{background:linear-gradient(100deg,#8b5cf6,#c026d3);border-color:transparent;color:#fff;box-shadow:0 8px 22px rgba(168,85,247,.4)}
+
+.wrap{padding:0 16px}
+.sec-t{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#9b7ec0;margin:20px 2px 10px;font-weight:600}
+
+.srch{display:flex;align-items:center;gap:9px;background:rgba(16,8,30,.9);border:1px solid rgba(147,51,234,.24);
+  border-radius:13px;padding:0 13px;margin-bottom:12px}
+.srch input{flex:1;background:none;border:0;outline:0;color:#f3e9ff;font:inherit;font-size:14px;padding:12px 0}
+.srch input::placeholder{color:#7a5f9c}
+
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid rgba(147,51,234,.24);background:rgba(24,12,44,.8);color:#bda0dd;
+  padding:7px 13px;border-radius:20px;font:inherit;font-size:12.5px;cursor:pointer;transition:.16s;white-space:nowrap}
+.chip:hover{color:#f3e9ff;border-color:rgba(192,132,252,.5)}
+.chip.on{background:rgba(168,85,247,.24);border-color:#c084fc;color:#fff}
+
+.grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+
+.card{position:relative;background:linear-gradient(160deg,rgba(33,16,58,.92),rgba(18,9,34,.94));
+  border:1px solid rgba(147,51,234,.26);border-radius:17px;padding:14px 14px 13px;cursor:pointer;transition:.2s;overflow:hidden}
+.card:before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(#a855f7,#d946ef);opacity:.85}
+.card:hover{border-color:rgba(192,132,252,.6);transform:translateY(-2px);box-shadow:0 14px 34px rgba(88,28,135,.4)}
+.c-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px;padding-right:16px}
+.c-n{font-size:14.5px;font-weight:600;line-height:1.3;flex:1}
+.c-d{font-size:12px;color:#b295cf;line-height:1.5}
+.c-bot{display:flex;align-items:center;gap:7px;margin-top:10px;flex-wrap:wrap}
+.bdg{font-size:10px;letter-spacing:.9px;text-transform:uppercase;padding:4px 9px;border-radius:7px;font-weight:600}
+.r1,.r2{background:rgba(52,211,153,.14);color:#6ee7b7;border:1px solid rgba(52,211,153,.28)}
+.r3{background:rgba(251,191,36,.14);color:#fcd34d;border:1px solid rgba(251,191,36,.28)}
+.r4{background:rgba(251,146,60,.15);color:#fdba74;border:1px solid rgba(251,146,60,.3)}
+.r5{background:rgba(244,63,94,.16);color:#fda4af;border:1px solid rgba(244,63,94,.34)}
+.ct{font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:#8f72b3;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);padding:4px 9px;border-radius:7px}
+.fav{position:absolute;top:9px;right:9px;background:none;border:0;font-size:14px;cursor:pointer;opacity:.4;transition:.16s;line-height:1}
+.fav:hover{opacity:1;transform:scale(1.15)}
+.fav.on{opacity:1;filter:drop-shadow(0 0 6px rgba(251,191,36,.9))}
+
+.ov{position:absolute;inset:0;background:rgba(5,2,12,.86);backdrop-filter:blur(7px);z-index:50;
+  display:flex;align-items:flex-start;justify-content:center;padding:18px;animation:fade .2s;border-radius:0}
+.modal{width:100%;max-width:520px;background:linear-gradient(180deg,#1d0f36,#120822);border:1px solid rgba(168,85,247,.4);
+  border-radius:20px;padding:18px;box-shadow:0 30px 80px rgba(0,0,0,.7);animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.95);opacity:0}to{transform:none;opacity:1}}
+.m-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px}
+.m-n{font-size:17px;font-weight:600;line-height:1.3}
+.m-d{font-size:12.5px;color:#b295cf;line-height:1.55;margin:8px 0 12px}
+.ta{width:100%;height:150px;resize:vertical;background:rgba(6,3,14,.92);border:1px solid rgba(147,51,234,.3);
+  border-radius:12px;padding:11px;color:#d9c4f5;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.5;outline:0}
+.ta:focus{border-color:#a855f7}
+.meta{display:flex;justify-content:space-between;font-size:11px;color:#8f72b3;margin:7px 2px 12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tip{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.24);border-radius:11px;padding:10px 12px;
+  font-size:12px;color:#d6bff2;line-height:1.55;margin-bottom:12px}
+.tip b{color:#f0abfc;font-weight:600}
+.x{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#e9d5ff;width:30px;height:30px;
+  border-radius:9px;cursor:pointer;font-size:15px;line-height:1;flex:0 0 auto}
+.x:hover{background:rgba(244,63,94,.22)}
+
+.panel{background:linear-gradient(170deg,rgba(31,15,54,.9),rgba(16,8,30,.94));border:1px solid rgba(147,51,234,.24);
+  border-radius:18px;padding:16px;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.22);border-radius:13px;padding:12px 8px;text-align:center}
+.stat b{display:block;font-size:21px;color:#e9d5ff;font-weight:700}
+.stat span{font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#a688c9}
+
+.inp{width:100%;background:rgba(8,4,16,.9);border:1px solid rgba(147,51,234,.26);border-radius:11px;
+  padding:11px 12px;color:#f3e9ff;font:inherit;font-size:14px;outline:0;margin-bottom:10px;transition:.16s}
+.inp:focus{border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.14)}
+.inp::placeholder{color:#7a5f9c}
+select.inp{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#a688c9 50%),linear-gradient(135deg,#a688c9 50%,transparent 50%);
+  background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.three{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+.acc{display:flex;align-items:center;gap:11px;background:rgba(20,10,38,.8);border:1px solid rgba(147,51,234,.2);
+  border-radius:13px;padding:11px 12px;margin-bottom:8px}
+.acc.off{opacity:.5}
+.acc .u{flex:1;min-width:0}
+.acc .u b{display:block;font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acc .u small{font-size:10.5px;color:#a688c9;letter-spacing:.4px}
+.pill{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:6px;font-weight:600;
+  background:rgba(168,85,247,.16);color:#d8b4fe;border:1px solid rgba(168,85,247,.3);white-space:nowrap}
+.pill.own{background:rgba(251,191,36,.16);color:#fcd34d;border-color:rgba(251,191,36,.35)}
+.pill.dead{background:rgba(244,63,94,.14);color:#fda4af;border-color:rgba(244,63,94,.3)}
+.mini{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#d9c4f5;width:28px;height:28px;
+  border-radius:8px;cursor:pointer;font-size:12px;line-height:1;flex:0 0 auto}
+.mini:hover{background:rgba(168,85,247,.28)}
+.mini.del:hover{background:rgba(244,63,94,.3)}
+
+.empty{text-align:center;padding:34px 16px;color:#8f72b3;font-size:13px;line-height:1.6}
+.empty div:first-child{font-size:30px;margin-bottom:10px;opacity:.5}
+
+.foot{text-align:center;font-size:10.5px;color:#7a5f9c;letter-spacing:1.6px;margin-top:26px;font-family:'JetBrains Mono',monospace}
+
+#toast{position:absolute;left:50%;bottom:22px;transform:translate(-50%,20px);background:linear-gradient(100deg,#7c3aed,#c026d3);
+  color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:500;padding:11px 18px;border-radius:12px;
+  box-shadow:0 14px 34px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.28s;z-index:99;max-width:88%;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.note{font-size:11.5px;color:#8f72b3;line-height:1.5;margin-top:9px}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px;color:#c9aee6;word-break:break-all;background:rgba(6,3,14,.9);
+  border:1px solid rgba(147,51,234,.24);border-radius:10px;padding:10px;margin-bottom:9px}
+
+.trow{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid rgba(147,51,234,.18);
+  border-radius:11px;margin-bottom:6px;font-size:12.5px;background:rgba(20,10,38,.7)}
+.trow.ok{border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.08)}
+.trow .n{flex:1;font-family:'JetBrains Mono',monospace;font-size:12px;color:#d3bcf0}
+.trow .st{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:#8f72b3}
+.trow.ok .st{color:#6ee7b7}
+.tbtn{background:rgba(168,85,247,.22);border:1px solid rgba(192,132,252,.5);color:#f0e2ff;border-radius:9px;
+  padding:6px 13px;font:inherit;font-size:11.5px;font-weight:600;cursor:pointer;flex:0 0 auto}
+.tbtn:hover{background:rgba(168,85,247,.4)}
+.banner{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:12px;padding:10px 12px;
+  font-size:11.5px;color:#a7f3d0;line-height:1.55;margin-bottom:12px}
+.switch{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#bda0dd;margin:10px 0 2px;cursor:pointer}
+.switch input{accent-color:#a855f7;width:16px;height:16px}
+
+.player{display:flex;align-items:center;gap:6px;margin:0 16px 10px;padding:8px;flex-wrap:nowrap;
+  background:linear-gradient(100deg,rgba(76,29,149,.6),rgba(24,9,42,.85));
+  border:1px solid rgba(168,85,247,.32);border-radius:14px;box-shadow:0 8px 22px rgba(60,15,110,.3)}
+.pbtn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#e9d5ff;
+  width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:11px;line-height:1;flex:0 0 auto;padding:0}
+.pbtn:hover{background:rgba(168,85,247,.3)}
+.pbtn.big{width:34px;height:34px;font-size:13px;background:linear-gradient(100deg,#8b5cf6,#c026d3);border:0;color:#fff}
+.pinfo{flex:1;min-width:0}
+.pname{font-size:11.5px;color:#e2d0f8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;letter-spacing:.2px}
+.pseek{width:100%;height:3px;accent-color:#d946ef;margin-top:5px;cursor:pointer}
+.pvol{width:46px;height:3px;accent-color:#a855f7;flex:0 0 auto}
+.part{width:30px;height:30px;border-radius:7px;object-fit:cover;flex:0 0 auto;background:#2a1447}
+@media(max-width:430px){.pvol{display:none}.pbtn{width:26px;height:26px}}
+
+.plist,.msearch{margin:0 16px 12px;background:rgba(14,6,26,.96);border:1px solid rgba(147,51,234,.26);border-radius:12px;padding:6px}
+.plist.hide,.msearch.hide{display:none}
+.pitem{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;font-size:12px;color:#c9aee6;cursor:pointer}
+.pitem:hover{background:rgba(168,85,247,.16)}
+.pitem.on{background:rgba(168,85,247,.24);color:#fff}
+.pitem span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pitem .rm{background:none;border:0;color:#a688c9;cursor:pointer;font-size:11px}
+.eq{display:inline-flex;gap:2px;align-items:flex-end;height:9px;margin-left:2px}
+.eq i{width:2px;background:#d946ef;border-radius:1px;animation:eqa .8s infinite ease-in-out}
+.eq i:nth-child(1){height:4px;animation-delay:0s}
+.eq i:nth-child(2){height:8px;animation-delay:.2s}
+.eq i:nth-child(3){height:5px;animation-delay:.4s}
+@keyframes eqa{0%,100%{height:3px}50%{height:9px}}
+
+.msearch{padding:9px}
+.sbar{display:flex;gap:7px;align-items:center}
+.sbar input{flex:1;background:rgba(8,4,16,.9);border:1px solid rgba(147,51,234,.3);border-radius:9px;
+  padding:9px 11px;color:#f3e9ff;font:inherit;font-size:12.5px;outline:0}
+.sbar input::placeholder{color:#7a5f9c}
+.sgo{background:linear-gradient(100deg,#8b5cf6,#c026d3);border:0;color:#fff;border-radius:9px;
+  padding:9px 13px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;flex:0 0 auto}
+.sres{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}
+@media(min-width:560px){.sres{grid-template-columns:1fr 1fr}}
+.rcard{display:flex;gap:8px;align-items:center;background:rgba(30,14,54,.7);border:1px solid rgba(147,51,234,.18);
+  border-radius:10px;padding:6px;cursor:pointer;transition:.15s}
+.rcard:hover{border-color:rgba(192,132,252,.5)}
+.rcard img{width:36px;height:36px;border-radius:6px;object-fit:cover;flex:0 0 auto;background:#2a1447}
+.rcard .t{flex:1;min-width:0}
+.rcard .t b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.rcard .t small{font-size:9.5px;color:#a688c9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.rcard .add{background:rgba(255,255,255,.08);border:0;color:#d9c4f5;width:24px;height:24px;border-radius:6px;
+  cursor:pointer;font-size:12px;flex:0 0 auto;line-height:1}
+.rcard .add:hover{background:rgba(168,85,247,.4)}
+.dlbox{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.3);border-radius:12px;padding:12px;margin-top:10px;font-size:12px;color:#d6bff2}
+</style>
+
+<div class="bgwrap"><div class="aurora"></div></div>
+<div id="app"></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const app=document.getElementById('app');
+const toastEl=document.getElementById('toast');
+const K_ACC='rwacc1',K_SES='rwses1',K_FAV='rwfav1',K_MUS='rwmus1';
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let S={tab:'bug',cat:'all',q:'',favOnly:false,tNums:'',tBug:'lw',tLvl:'sedang',tPre:true,tDone:{}};
+
+const MARKS=['\u0300','\u0301','\u0302','\u0303','\u0308','\u030a','\u030c','\u0330','\u0332','\u0345','\u035c','\u0360','\u0489','\u20d0','\u20d1'];
+function zalgo(t,n){let o='';for(const ch of t){o+=ch;for(let i=0;i<n;i++)o+=MARKS[(Math.random()*MARKS.length)|0];}return o;}
+const R=m=>Math.max(1,Math.round(m));
+const MULT={ringan:.4,sedang:1,brutal:2.6};
+
+const CATS=[{id:'all',l:'Semua'},{id:'pribadi',l:'Chat pribadi'},{id:'tanam',l:'Tanam permanen'},{id:'samaran',l:'Samaran'},{id:'grup',l:'Grup'},{id:'iphone',l:'iPhone'},{id:'android',l:'Android'}];
+const CATL={pribadi:'Chat pribadi',tanam:'Tanam permanen',samaran:'Samaran',grup:'Grup',iphone:'iPhone',android:'Android'};
+
+const BUGS=[
+{id:'zw',cat:'pribadi',risk:3,n:'Pesan invisible',d:'Pesan yang benar-benar tidak terlihat sama sekali. Chat jadi kosong dan penerima bingung.',g:m=>'\u200b\u200c\u200d\u2060\ufeff'.repeat(R(400*m)),t:'Kirim 3-5 kali berturut-turut. Bisa juga dipakai buat nama grup atau bio.'},
+{id:'zalgo',cat:'pribadi',risk:4,n:'Zalgo chaos',d:'Teks dengan tumpukan tanda diakritik. Render teks jadi berantakan dan berat.',g:m=>zalgo('ricostudent',R(12*m)),t:'Makin banyak karakter, makin parah. Kirim di chat pribadi untuk efek maksimal.'},
+{id:'nl',cat:'pribadi',risk:4,n:'Bom baris kosong',d:'Ribuan enter dalam satu pesan. Bubble chat melar dan scroll jadi berat.',g:m=>'\n'.repeat(R(1800*m)),t:'Jangan kirim lebih dari sekali, WhatsApp bisa freeze saat menampilkan.'},
+{id:'lw',cat:'pribadi',risk:5,n:'Kata tanpa spasi 30k',d:'Satu kata raksasa tanpa spasi. Mesin teks gagal memotong baris dan UI nge-hang.',g:m=>'H'.repeat(R(11000*m)),t:'Payload paling ringan untuk bikin HP ngelag. Kirim lalu tutup-buka chat.'},
+{id:'lig',cat:'pribadi',risk:5,n:'Badai ligatur arab',d:'Karakter ligatur arab berulang. Rendering font arab jadi berat dan bikin crash.',g:m=>'ﻻ'.repeat(R(2600*m)),t:'Efek paling kuat di HP spek rendah. Jangan digabung dengan teks lain.'},
+{id:'bang',cat:'pribadi',risk:4,n:'Bengali shatter',d:'Rangkaian konsonan Bengali kompleks. Font shaping jadi lambat.',g:m=>'ক্ষ'.repeat(R(2200*m)),t:'Cocok untuk target Android lama.'},
+{id:'emo',cat:'pribadi',risk:3,n:'Banjir emoji',d:'Ribuan emoji campur dalam satu pesan. Cache emoji penuh dan lag.',g:m=>'🔥💀⚡🌊🍇🦄🌪'.repeat(R(320*m)),t:'Buka chat yang penuh emoji bisa bikin lag beberapa detik.'},
+{id:'bidi',cat:'pribadi',risk:3,n:'Bidi override',d:'Karakter arah teks dipaksa bolak-balik. Urutan huruf jadi kacau.',g:m=>'\u202e'+('ricostudent '+'\u202d').repeat(R(120*m))+'\u202c',t:'Pesan terlihat terbalik dan membingungkan penerima.'},
+{id:'bism',cat:'pribadi',risk:4,n:'Bom basmalah',d:'Karakter ligatur basmalah tunggal yang sangat berat diulang ribuan kali.',g:m=>'﷽'.repeat(R(1100*m)),t:'Satu karakter = satu blok glyph besar. Sangat berat di render.'},
+{id:'comb',cat:'pribadi',risk:4,n:'Combining marks',d:'Tanda gabung U+0330 ditumpuk. Huruf jadi bertumpuk tak terkendali.',g:m=>'a'+'\u0330\u0331\u0332'.repeat(R(500*m)),t:'Bisa merusak tinggi baris di seluruh chat.'},
+{id:'dig',cat:'pribadi',risk:3,n:'Dinding angka',d:'Deretan angka tanpa putus. Auto-link dan deteksi nomor jadi lambat.',g:m=>'1'.repeat(R(9000*m)),t:'Coba juga campur angka arab-india untuk hasil lebih parah.'},
+{id:'lsep',cat:'pribadi',risk:3,n:'Line separator',d:'Karakter pemisah baris U+2028 yang tidak terlihat di pratinjau.',g:m=>'\u2028'.repeat(R(1400*m)),t:'Pratinjau chat tampak normal, isi pesan sebenarnya berantakan.'},
+{id:'cap',cat:'pribadi',risk:4,n:'Caption media bomb',d:'Caption panjang untuk dikirim bersama foto/video.',g:m=>'﷽\u200b'+'\n'.repeat(R(300*m))+'ricostudent ⸸666',t:'Tempel di kolom caption saat kirim media, bukan di chat.'},
+
+{id:'tn1',cat:'tanam',risk:4,n:'Nama grup permanen',d:'Nama grup jadi invisible + zalgo. Nempel di daftar chat semua anggota, tidak bisa dihapus member.',g:m=>zalgo('\u200b',R(9*m)),t:'Kamu harus admin. Ubah nama grup lalu simpan. Efek bertahan sampai diganti.'},
+{id:'tn2',cat:'tanam',risk:5,n:'Deskripsi grup permanen',d:'Deskripsi grup raksasa. Tersimpan permanen dan dibaca tiap anggota yang buka info grup.',g:m=>'﷽'.repeat(R(500*m))+'\n'.repeat(R(400*m))+'\u200b'.repeat(R(600*m)),t:'Kamu harus admin. Tempel di deskripsi grup. Efek ke semua anggota.'},
+{id:'tn3',cat:'tanam',risk:3,n:'Link undangan rigged',d:'Undangan grup yang isinya sudah dipasangi bug nama + deskripsi. Korban masuk sendiri tanpa sadar.',g:m=>'https://chat.whatsapp.com/ '.repeat(R(60*m)),t:'Ganti dengan link grup asli. Sebar link, korban kena bug begitu join.'},
+{id:'tn4',cat:'tanam',risk:3,n:'Nama profil permanen',d:'Nama profil invisible. Namamu hilang dari daftar chat dan daftar anggota grup.',g:m=>'\u200b\u200c\u200d\u2060'.repeat(R(60*m)),t:'Ubah nama profil lalu simpan. Efeknya menempel di semua chat.'},
+{id:'tn5',cat:'tanam',risk:3,n:'Bio profil permanen',d:'Bio profil dengan tumpukan tanda. Profil sulit dibaca orang lain.',g:m=>zalgo('rico',R(10*m)),t:'Tempel di kolom bio (maks 139 karakter).'},
+{id:'tn6',cat:'tanam',risk:4,n:'Nama dokumen permanen',d:'Nama file invisible + zalgo. Tersimpan di daftar media grup dan merusak tampilan.',g:m=>zalgo('file',R(8*m))+'\u200b'.repeat(R(40*m))+'.pdf',t:'Rename file sebelum dikirim ke grup, lalu kirim sebagai dokumen.'},
+
+{id:'sm1',cat:'samaran',risk:4,n:'Samaran pesan sistem',d:'Payload berat dibungkus teks yang menyerupai notifikasi resmi WhatsApp.',g:m=>'⚠️ Pesan ini tidak dapat dimuat\n'+'\u200b'.repeat(R(300*m))+'\n'+'﷽'.repeat(R(260*m))+'\n\nTekan lama untuk memuat ulang.',t:'Korban mengira ini notifikasi resmi, bukan bug. Tidak langsung dihapus.'},
+{id:'sm2',cat:'samaran',risk:4,n:'Samaran sinkronisasi',d:'Menyamar sebagai kegagalan sinkronisasi, isi bug disembunyikan di tengah.',g:m=>'🔄 Sinkronisasi terhenti\n'+'▱'.repeat(R(400*m))+'\n'+'ﻻ'.repeat(R(900*m))+'\n\nTunggu, jangan tutup chat.',t:'Efek psikologis: korban menunggu dan membiarkan chat terbuka, jadi makin lag.'},
+{id:'sm3',cat:'samaran',risk:5,n:'Samaran chat kedaluwarsa',d:'Menyamar sebagai pesan kedaluwarsa, payload paling berat ditanam di baris kosong.',g:m=>'📵 Chat ini telah kedaluwarsa\n'+'\n'.repeat(R(700*m))+'\u200b'.repeat(R(900*m))+'\n'+'\u0e33'.repeat(R(900*m)),t:'Korban akan mencoba scroll dan menekan pesan, puncak lag terjadi di situ.'},
+{id:'sm4',cat:'samaran',risk:3,n:'Samaran verifikasi',d:'Menyamar sebagai permintaan verifikasi akun. Korban merasa wajib membalas.',g:m=>'✅ Verifikasi keamanan\n'+'\u200b'.repeat(R(500*m))+'\n'+'﷽'.repeat(R(200*m))+'\n\nBalas OK untuk melanjutkan.',t:'Bikin korban membalas, jadi chat makin panjang dan berat.'},
+
+{id:'mall',cat:'grup',risk:4,n:'Mention all spam',d:'Tag semua anggota berkali-kali. Notifikasi grup meledak.',g:m=>'@all '.repeat(R(140*m)),t:'Tempel di grup. Tiap "@all" memicu notifikasi ke semua anggota.'},
+{id:'inv',cat:'grup',risk:3,n:'Spam link undangan',d:'Tautan undangan grup berulang. Pratinjau link dibuat ratusan kali.',g:m=>'https://chat.whatsapp.com/ '.repeat(R(60*m)),t:'Ganti dengan link grup asli kalau mau terlihat meyakinkan.'},
+{id:'poll',cat:'grup',risk:4,n:'Polling overload',d:'Opsi polling maksimal dengan teks panjang. Panel voting berat.',g:m=>{let o='';for(let i=1;i<=12;i++)o+=(i+'. ')+'﷽'.repeat(R(12*m))+'\n';return o},t:'Buat polling baru, tempel tiap baris jadi opsi. Maksimal 12 opsi.'},
+{id:'read',cat:'grup',risk:3,n:'Read-all bomb',d:'Ratusan baris bernomor. Centang biru grup menyebar cepat.',g:m=>{let o='';for(let i=1;i<=R(160*m);i++)o+=i+'. ricostudent ⸸666\n';return o},t:'Kirim di grup, semua anggota langsung terpaksa scroll.'},
+{id:'stick',cat:'grup',risk:4,n:'Sticker flood',d:'Kirim 100+ sticker beruntun. Cache sticker penuh, galeri lag.',g:m=>{let o='Langkah:\n';for(let i=1;i<=6;i++)o+=i+'. Pilih '+R(20*m)+' sticker, kirim semua sekaligus\n';o+='\nUlangi 3x sampai chat grup macet.';return o},t:'Pilih banyak sticker di panel sticker lalu kirim sekaligus.'},
+
+{id:'iosf',cat:'iphone',risk:5,n:'iOS freeze text',d:'Kata panjang dengan tanda gabung ekstrem. iOS gagal hitung tinggi baris.',g:m=>'r'+'\u0330\u0301\u0308\u0332\u035c'.repeat(R(900*m)),t:'Khusus iPhone. Setelah terkirim, buka chat itu — UI bisa freeze total.'},
+{id:'iosz',cat:'iphone',risk:4,n:'iOS ZWJ emoji chain',d:'Emoji gabungan keluarga berulang. Renderer emoji iOS jadi berat.',g:m=>'👨‍👩‍👧‍👦'.repeat(R(260*m)),t:'Efek maksimal di iOS lama. Android hanya sedikit lag.'},
+{id:'iosn',cat:'iphone',risk:4,n:'iOS notif bomb',d:'Baris pendek banyak untuk dikirim cepat beruntun.',g:m=>{let o='';for(let i=1;i<=R(120*m);i++)o+='⚡'+i+'\n';return o},t:'Kirim per blok 20 baris supaya notifikasi masuk bergelombang.'},
+
+{id:'and',cat:'android',risk:5,n:'Android renderer crash',d:'Karakter Thailand SARA AM berulang. Shaping font Android kewalahan.',g:m=>'\u0e33'.repeat(R(2400*m)),t:'Khusus Android. Bubble chat bisa gagal dirender sepenuhnya.'},
+{id:'andd',cat:'android',risk:4,n:'Malayalam stack',d:'Konsonan bertumpuk Malayalam. Mesin font Android jadi lambat.',g:m=>'\u0d15\u0d4d\u0d37'.repeat(R(1900*m)),t:'Kombinasikan dengan emoji untuk hasil lebih berat.'},
+{id:'andn',cat:'android',risk:4,n:'Android notif storm',d:'Pola baris dengan karakter lebar untuk memicu notifikasi beruntun.',g:m=>{let o='';for(let i=1;i<=R(110*m);i++)o+='█▓▒░ '+i+'\n';return o},t:'Matikan mode hemat daya dulu, notifikasi jadi lebih deras.'}
+];
+
+function toast(t){toastEl.textContent=t;toastEl.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>toastEl.classList.remove('on'),2100);}
+function accs(){return LS.get(K_ACC,[]);}
+function saveAccs(a){LS.set(K_ACC,a);}
+function me(){const s=LS.get(K_SES,null);if(!s)return null;return accs().find(x=>x.u===s.u)||null;}
+function favs(){return LS.get(K_FAV,[]);}
+function fmt(ts){if(!ts)return 'Permanen';const d=Math.ceil((ts-Date.now())/864e5);if(d<0)return 'Kedaluwarsa';return d+' hari lagi';}
+function seed(){
+  let a=LS.get(K_ACC,null);
+  if(!Array.isArray(a)){a=[{u:'rico',p:'rico123',role:'owner',plan:'OWNER',exp:null,active:true,created:Date.now()}];saveAccs(a);return;}
+  if(!a.some(x=>x.role==='owner')){a.unshift({u:'rico',p:'rico123',role:'owner',plan:'OWNER',exp:null,active:true,created:Date.now()});saveAccs(a);}
+}
+async function copyTxt(t,elId){
+  try{await navigator.clipboard.writeText(t);toast('Tersalin');return;}
+  catch(e){}
+  const ta=document.getElementById(elId||'tp')||document.querySelector('.ta');
+  if(ta){try{ta.focus();ta.select();document.execCommand('copy');toast('Tersalin');}catch(_){toast('Tekan lama lalu salin manual');}}
+  else toast('Gagal menyalin');
+}
+function riskLbl(r){return ['','Ringan','Ringan','Sedang','Berat','Fatal'][r];}
+function normNum(n){let x=String(n).replace(/\D/g,'');if(x.startsWith('0'))x='62'+x.slice(1);if(x.startsWith('620'))x='62'+x.slice(3);return x;}
+function parseNums(s){
+  const out=[];
+  String(s).split(/[\s,;|\n\r\t]+/).forEach(p=>{
+    const n=normNum(p);
+    if(n.length>=9&&n.length<=15&&!out.includes(n))out.push(n);
+  });
+  return out;
+}
+function genPayload(id,lvl){const b=BUGS.find(x=>x.id===id)||BUGS[0];return b.g(MULT[lvl||'sedang']);}
+
+function viewLogin(err){
+  app.innerHTML=`
+  <div class="login">
+    <div class="crown">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#e9d5ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 8l3.5 3L12 5l4.5 6L20 8l-1.5 10h-13z"/><path d="M5 21h14"/>
+      </svg>
+    </div>
+    <div class="logo">𝙧𝙞𝙘𝙤✗𝙨𝙩𝙪𝙙𝙚𝙣𝙩 ⸸⁶⁶⁶</div>
+    <div class="sub">Panel bug WhatsApp</div>
+    <div class="tagline">Masuk untuk melanjutkan</div>
+    <div class="box">
+      ${err?`<div class="err on">${esc(err)}</div>`:''}
+      <div class="lbl">Username</div>
+      <div class="field">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a688c9" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+        <input id="lu" placeholder="username kamu" autocomplete="username" spellcheck="false">
+      </div>
+      <div class="lbl">Password</div>
+      <div class="field">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a688c9" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <input id="lp" type="password" placeholder="password" autocomplete="current-password">
+        <button class="eye" id="ey">lihat</button>
+      </div>
+      <button class="btn btn-p" id="go">Masuk</button>
+      <div class="note" style="text-align:center">Belum punya akun? Hubungi owner untuk dibuatkan.</div>
+    </div>
+    <div class="foot">𝙧𝙞𝙘𝙤✗𝙨𝙩𝙪𝙙𝙚𝙣𝙩 ⸸⁶⁶⁶</div>
+  </div>`;
+
+  const lu=document.getElementById('lu'),lp=document.getElementById('lp');
+  document.getElementById('ey').onclick=e=>{lp.type=lp.type==='password'?'text':'password';e.target.textContent=lp.type==='password'?'lihat':'tutup';};
+  const doLogin=()=>{
+    const u=lu.value.trim(),p=lp.value;
+    if(!u||!p)return viewLogin('Username dan password wajib diisi.');
+    const a=accs().find(x=>x.u.toLowerCase()===u.toLowerCase());
+    if(!a||a.p!==p)return viewLogin('Username atau password salah.');
+    if(!a.active)return viewLogin('Akun ini dinonaktifkan oleh owner.');
+    if(a.role!=='owner'&&a.exp&&a.exp<Date.now())return viewLogin('Masa aktif akun sudah habis. Hubungi owner.');
+    LS.set(K_SES,{u:a.u});S.tab='bug';render();toast('Selamat datang, '+a.u);
+  };
+  document.getElementById('go').onclick=doLogin;
+  lp.onkeydown=e=>{if(e.key==='Enter')doLogin();};
+  lu.onkeydown=e=>{if(e.key==='Enter')lp.focus();};
+  lu.focus();
+}
+
+function viewShell(){
+  const u=me();
+  const tabs=[{id:'bug',l:'Bug',ic:'⚡'},{id:'tembak',l:'Tembak',ic:'🎯'},{id:'alat',l:'Alat',ic:'🛠'}];
+  if(u.role==='owner')tabs.push({id:'owner',l:'Owner',ic:'👑'});
+  tabs.push({id:'akun',l:'Akun',ic:'👤'});
+
+  app.innerHTML=`
+  <div class="head">
+    <div class="brand">𝙧𝙞𝙘𝙤✗𝙨𝙩𝙪𝙙𝙚𝙣𝙩 ⸸⁶⁶⁶</div>
+    <div class="who">
+      <div style="text-align:right">
+        <div class="nm">${esc(u.u)}</div>
+        <div class="rl ${u.role==='owner'?'own':''}">${u.role==='owner'?'owner':'member'}</div>
+      </div>
+      <div class="av ${u.role==='owner'?'own':''}">${esc(u.u[0].toUpperCase())}</div>
+    </div>
+  </div>
+  <div class="tabs">${tabs.map(t=>`<button class="tab ${S.tab===t.id?'on':''}" data-tab="${t.id}"><span>${t.ic}</span>${t.l}</button>`).join('')}</div>
+  ${playerHTML()}
+  ${searchHTML()}
+  <div class="wrap" id="view"></div>
+  <div class="foot">𝙧𝙞𝙘𝙤✗𝙨𝙩𝙪𝙙𝙚𝙣𝙩 ⸸⁶⁶⁶ · panel bug wa</div>`;
+
+  mountPlayer();mountSearch();
+  const v=document.getElementById('view');
+  if(S.tab==='bug')viewBug(v);
+  else if(S.tab==='tembak')viewTembak(v);
+  else if(S.tab==='alat')viewAlat(v);
+  else if(S.tab==='owner')viewOwner(v);
+  else viewAkun(v);
+}
+
+function viewBug(v){
+  const f=favs();
+  const list=BUGS.filter(b=>(S.cat==='all'||b.cat===S.cat)&&(!S.q||(b.n+' '+b.d).toLowerCase().includes(S.q.toLowerCase()))&&(!S.favOnly||f.includes(b.id)));
+  v.innerHTML=`
+  <div class="srch">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7a5f9c" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="q" placeholder="Cari fitur bug..." value="${esc(S.q)}">
+  </div>
+  <div class="chips">
+    ${CATS.map(c=>`<button class="chip ${S.cat===c.id?'on':''}" data-cat="${c.id}">${c.l}</button>`).join('')}
+    <button class="chip ${S.favOnly?'on':''}" data-fav="1">★ Favorit</button>
+  </div>
+  <div class="sec-t">${list.length} modul tersedia</div>
+  <div class="grid">
+    ${list.length?list.map(b=>`
+      <div class="card" data-bug="${b.id}">
+        <button class="fav ${f.includes(b.id)?'on':''}" data-favbtn="${b.id}">★</button>
+        <div class="c-top"><div class="c-n">${esc(b.n)}</div></div>
+        <div class="c-d">${esc(b.d)}</div>
+        <div class="c-bot"><span class="bdg r${b.risk}">${riskLbl(b.risk)}</span><span class="ct">${CATL[b.cat]}</span></div>
+      </div>`).join(''):`<div class="empty" style="grid-column:1/-1"><div>◌</div>Tidak ada modul yang cocok.<br>Coba kata kunci lain.</div>`}
+  </div>`;
+
+  document.getElementById('q').oninput=e=>{S.q=e.target.value;const p=e.target.selectionStart;viewBug(v);const nq=document.getElementById('q');nq.focus();nq.setSelectionRange(p,p);};
+}
+
+function openBug(id){
+  const b=BUGS.find(x=>x.id===id);if(!b)return;
+  const payload=b.g(MULT[S.tLvl]);
+
+  const ov=document.createElement('div');
+  ov.className='ov';
+  ov.innerHTML=`
+    <div class="modal">
+      <div class="m-top">
+        <div>
+          <div class="m-n">${esc(b.n)}</div>
+          <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap">
+            <span class="bdg r${b.risk}">${riskLbl(b.risk)}</span><span class="ct">${CATL[b.cat]}</span>
+          </div>
+        </div>
+        <button class="x" id="cx">✕</button>
+      </div>
+      <div class="m-d">${esc(b.d)}</div>
+      <div class="tip"><b>Intensitas:</b> ${S.tLvl}. <b>Cara pakai:</b> ${esc(b.t)}</div>
+      <textarea class="ta" id="pl" readonly>${esc(payload)}</textarea>
+      <div class="meta"><span>${payload.length.toLocaleString('id-ID')} karakter</span><span>${CATL[b.cat]}</span></div>
+      <div class="row2" style="margin-bottom:9px">
+        <button class="btn btn-g sm" id="cp">Salin payload</button>
+        <button class="btn btn-g sm" id="lvl">Ganti intensitas</button>
+      </div>
+      <div class="inp" style="display:flex;align-items:center;gap:8px;margin:0">
+        <span style="font-size:12px;color:#a688c9">+62</span>
+        <input id="num" placeholder="nomor target" style="flex:1;background:none;border:0;outline:0;color:#f3e9ff;font:inherit;font-size:14px;padding:11px 0">
+      </div>
+      <div class="row2" style="margin-top:8px">
+        <button class="btn btn-p sm" id="send">Tembak nomor ini</button>
+        <button class="btn btn-g sm" id="mass">Banyak nomor</button>
+      </div>
+      <div class="note">Nomor otomatis dinormalkan ke format 62. Payload tersalin sebelum chat dibuka.</div>
+    </div>`;
+  app.appendChild(ov);
+
+  const close=()=>ov.remove();
+  document.getElementById('cx').onclick=close;
+  ov.onclick=e=>{if(e.target===ov)close();};
+  document.getElementById('cp').onclick=()=>copyTxt(payload,'pl');
+  document.getElementById('lvl').onclick=()=>{
+    const order=['ringan','sedang','brutal'];
+    S.tLvl=order[(order.indexOf(S.tLvl)+1)%3];
+    close();openBug(id);toast('Intensitas: '+S.tLvl);
+  };
+  document.getElementById('send').onclick=()=>{
+    const n=normNum(document.getElementById('num').value);
+    if(n.length<9)return toast('Isi nomor target dulu');
+    copyTxt(payload,'pl');
+    window.open('https://wa.me/'+n+(S.tPre?'?text='+encodeURIComponent(payload):''),'_blank');
+    close();
+  };
+  document.getElementById('mass').onclick=()=>{
+    S.tBug=id;S.tab='tembak';S.tDone={};close();render();
+    toast('Modul dipilih, tempel nomornya');
+  };
+}
+
+function viewTembak(v){
+  const bug=BUGS.find(b=>b.id===S.tBug)||BUGS[0];
+  const nums=parseNums(S.tNums);
+  const payload=bug.g(MULT[S.tLvl]);
+
+  v.innerHTML=`
+  <div class="banner">
+    Tempel nomor target, bug langsung meluncur ke dia. Payload otomatis tersalin, tinggal tekan kirim di WhatsApp.
+  </div>
+
+  <div class="sec-t">Nomor target</div>
+  <textarea class="ta" id="tn" placeholder="Tempel nomor di sini. Boleh banyak, pisah koma atau baris baru.&#10;Contoh: 08123456789, 628987654321" style="height:92px">${esc(S.tNums)}</textarea>
+  <div class="meta"><span id="cnt">${nums.length} nomor siap</span><span>format 08 / 628</span></div>
+
+  <div class="sec-t">Modul bug</div>
+  <select class="inp" id="tbug">
+    ${BUGS.map(b=>`<option value="${b.id}" ${b.id===bug.id?'selected':''}>${esc(b.n)} — ${CATL[b.cat]}</option>`).join('')}
+  </select>
+  <select class="inp" id="tlvl">
+    <option value="ringan" ${S.tLvl==='ringan'?'selected':''}>Intensitas ringan</option>
+    <option value="sedang" ${S.tLvl==='sedang'?'selected':''}>Intensitas sedang</option>
+    <option value="brutal" ${S.tLvl==='brutal'?'selected':''}>Intensitas brutal</option>
+  </select>
+  <label class="switch"><input type="checkbox" id="tpre" ${S.tPre?'checked':''}> Isi pesan otomatis di chat (matikan kalau mau tempel sendiri)</label>
+
+  <div class="sec-t">Payload siap kirim</div>
+  <textarea class="ta" id="tp" readonly style="height:110px">${esc(payload)}</textarea>
+  <div class="meta"><span>${payload.length.toLocaleString('id-ID')} karakter</span><span>${esc(bug.t.slice(0,42))}...</span></div>
+  <button class="btn btn-g sm" id="tcp">Salin payload saja</button>
+
+  ${nums.length?`
+  <div class="sec-t">Daftar tembak ${Object.keys(S.tDone).length}/${nums.length}</div>
+  ${nums.map((n,i)=>`<div class="trow ${S.tDone[i]?'ok':''}">
+      <span class="n">${esc(n)}</span>
+      ${S.tDone[i]?'<span class="st">terkirim</span>':`<button class="tbtn" data-tfire="${i}">Tembak</button>`}
+    </div>`).join('')}
+  <button class="btn btn-p" id="tall" style="margin-top:10px">Tembak semua beruntun</button>
+  <div class="note">Beruntun membuka satu chat tiap 4 detik. Izinkan popup di browser.</div>
+  `:`<div class="empty"><div>🎯</div>Belum ada nomor.<br>Tempel nomor di atas untuk mulai.</div>`}
+  `;
+
+  const tn=document.getElementById('tn');
+  tn.oninput=()=>{S.tNums=tn.value;document.getElementById('cnt').textContent=parseNums(tn.value).length+' nomor siap';};
+  document.getElementById('tbug').onchange=e=>{S.tBug=e.target.value;S.tDone={};viewTembak(v);};
+  document.getElementById('tlvl').onchange=e=>{S.tLvl=e.target.value;viewTembak(v);};
+  document.getElementById('tpre').onchange=e=>{S.tPre=e.target.checked;};
+  document.getElementById('tcp').onclick=()=>copyTxt(payload,'tp');
+  const tall=document.getElementById('tall');
+  if(tall)tall.onclick=()=>{
+    const n=parseNums(S.tNums);
+    if(!n.length)return toast('Belum ada nomor');
+    copyTxt(payload,'tp');
+    let i=0;
+    const step=()=>{
+      if(i>=n.length)return toast('Semua nomor sudah dibuka');
+      const w=window.open('https://wa.me/'+n[i]+(S.tPre?'?text='+encodeURIComponent(payload):''),'_blank');
+      if(w)S.tDone[i]=true;else toast('Popup diblokir, izinkan lalu ulangi');
+      i++;
+      if(i<n.length)setTimeout(step,4000);
+    };
+    step();
+  };
+}
+
+function fireOne(i){
+  const n=parseNums(S.tNums)[i];if(!n)return;
+  const payload=genPayload(S.tBug,S.tLvl);
+  copyTxt(payload,'tp');
+  window.open('https://wa.me/'+n+(S.tPre?'?text='+encodeURIComponent(payload):''),'_blank');
+  S.tDone[i]=true;
+  const v=document.getElementById('view');
+  if(v&&S.tab==='tembak')viewTembak(v);
+}
+
+const DEMO=[
+  {name:'The Wires',url:'https://storage.googleapis.com/media-session/elephants-dream/the-wires.mp3'},
+  {name:'Snow Fight',url:'https://storage.googleapis.com/media-session/sintel/snow-fight.mp3'},
+  {name:'Prelude',url:'https://storage.googleapis.com/media-session/big-buck-bunny/prelude.mp3'}
+];
+let M={list:LS.get(K_MUS,null)||DEMO.slice(),i:0,playing:false,vol:.7,now:null,openList:false,openSearch:false,q:'',res:[],busy:false,err:''};
+const audio=new Audio();
+audio.volume=M.vol;
+audio.preload='metadata';
+
+function playerHTML(){
+  const n=M.now;
+  return `<div class="player" id="player">
+    <button class="pbtn" id="mprev">⏮</button>
+    <button class="pbtn big" id="mplay">${M.playing?'⏸':'▶'}</button>
+    <button class="pbtn" id="mnext">⏭</button>
+    ${n&&n.art?`<img class="part" id="mart" src="${esc(n.art)}" alt="">`:''}
+    <div class="pinfo">
+      <div class="pname" id="mname">${esc(n?n.name:'pilih lagu')} ${M.playing?'<span class="eq"><i></i><i></i><i></i></span>':''}</div>
+      <input type="range" class="pseek" id="mseek" min="0" max="100" value="0">
+    </div>
+    <button class="pbtn" id="msrch" title="cari lagu">🔍</button>
+    <button class="pbtn" id="madd" title="tambah tautan">+</button>
+    <input type="range" class="pvol" id="mvol" min="0" max="100" value="${Math.round(M.vol*100)}">
+  </div>
+  <div class="plist ${M.openList?'':'hide'}" id="plist">
+    ${M.list.length?M.list.map((t,i)=>`<div class="pitem ${i===M.i?'on':''}" data-mplay="${i}"><span>${esc(t.name)}</span><button class="rm" data-mrm="${i}">✕</button></div>`).join(''):'<div class="pitem" style="color:#8f72b3">Playlist kosong</div>'}
+    <div class="pitem" data-murl="1" style="color:#a688c9"><span>+ tambah dari tautan</span></div>
+  </div>`;
+}
+function searchHTML(){
+  return `<div class="msearch ${M.openSearch?'':'hide'}" id="msearch">
+    <div class="sbar">
+      <input id="sq" placeholder="Cari lagu atau artis..." value="${esc(M.q)}">
+      <button class="sgo" id="sgo">Cari</button>
+    </div>
+    ${M.busy?'<div class="note" style="text-align:center">mencari...</div>':''}
+    ${M.err?`<div class="note" style="text-align:center;color:#fda4af">${esc(M.err)}</div>`:''}
+    ${M.res.length?`<div class="sres">${M.res.map((t,i)=>`
+      <div class="rcard" data-rplay="${i}">
+        ${t.art?`<img src="${esc(t.art)}" alt="">`:''}
+        <div class="t"><b>${esc(t.name)}</b><small>${esc(t.artist)}</small></div>
+        <button class="add" data-radd="${i}">+</button>
+      </div>`).join('')}</div>`:''}
+    ${!M.res.length&&!M.busy&&!M.err?'<div class="note" style="text-align:center">Ketik judul lagu lalu tekan Cari.</div>':''}
+    <div class="note">Hasil berupa cuplikan 30 detik dari katalog publik. Ketuk untuk memutar, tombol + untuk menyimpan.</div>
+  </div>`;
+}
+
+function mountPlayer(){
+  const seek=document.getElementById('mseek'),vol=document.getElementById('mvol');
+  const playBtn=document.getElementById('mplay'),name=document.getElementById('mname');
+  const list=document.getElementById('plist');
+  if(!seek)return;
+  if(audio.duration)seek.value=audio.currentTime/audio.duration*100;
+  playBtn.textContent=M.playing?'⏸':'▶';
+  playBtn.onclick=()=>{M.playing?pauseMus():playMus();};
+  document.getElementById('mnext').onclick=()=>nextMus();
+  document.getElementById('mprev').onclick=()=>prevMus();
+  document.getElementById('madd').onclick=()=>addMusic();
+  document.getElementById('msrch').onclick=()=>{M.openSearch=!M.openSearch;M.openList=false;rerenderShell();};
+  name.onclick=()=>{M.openList=!M.openList;M.openSearch=false;rerenderShell();};
+  seek.oninput=()=>{if(audio.duration)audio.currentTime=audio.duration*seek.value/100;};
+  vol.oninput=()=>{M.vol=vol.value/100;audio.volume=M.vol;};
+  list.querySelectorAll('[data-mplay]').forEach(el=>{
+    el.onclick=e=>{if(e.target.dataset.mrm!==undefined)return;M.i=+el.dataset.mplay;playIndex(M.i);};
+  });
+  list.querySelectorAll('[data-mrm]').forEach(el=>{
+    el.onclick=e=>{
+      e.stopPropagation();
+      M.list.splice(+el.dataset.mrm,1);
+      if(M.i>=M.list.length)M.i=0;
+      LS.set(K_MUS,M.list);rerenderShell();
+    };
+  });
+  const ub=list.querySelector('[data-murl]');
+  if(ub)ub.onclick=()=>addMusic();
+}
+
+function mountSearch(){
+  const q=document.getElementById('sq'),go=document.getElementById('sgo');
+  if(!q)return;
+  q.oninput=()=>{M.q=q.value;};
+  q.onkeydown=e=>{if(e.key==='Enter')doSearch();};
+  go.onclick=doSearch;
+  document.querySelectorAll('[data-rplay]').forEach(el=>{
+    el.onclick=e=>{
+      if(e.target.dataset.radd!==undefined)return;
+      const t=M.res[+el.dataset.rplay];if(t)playNow(t);
+    };
+  });
+  document.querySelectorAll('[data-radd]').forEach(el=>{
+    el.onclick=e=>{
+      e.stopPropagation();
+      const t=M.res[+el.dataset.radd];
+      if(!t)return;
+      M.list.push({name:t.name+' — '+t.artist,url:t.url,art:t.art});
+      LS.set(K_MUS,M.list);toast('Masuk playlist');
+    };
+  });
+}
+
+function jsonp(url){
+  return new Promise((res,rej)=>{
+    const cb='__cb'+Date.now()+Math.floor(Math.random()*9999);
+    const s=document.createElement('script');
+    let done=false;
+    window[cb]=d=>{done=true;res(d);try{delete window[cb];}catch(e){}s.remove();};
+    s.onerror=()=>{if(done)return;done=true;rej(new Error('jsonp'));try{delete window[cb];}catch(e){}s.remove();};
+    s.src=url+(url.indexOf('?')>-1?'&':'?')+'callback='+cb;
+    (document.head||document.documentElement).appendChild(s);
+    setTimeout(()=>{if(!done){done=true;rej(new Error('timeout'));s.remove();}},9000);
+  });
+}
+
+async function doSearch(){
+  const el=document.getElementById('sq');
+  const term=(el&&el.value||M.q||'').trim();
+  if(!term)return toast('Tulis judul lagu dulu');
+  M.q=term;M.busy=true;M.res=[];M.err='';rerenderShell();
+  const api='https://itunes.apple.com/search?media=music&entity=song&limit=20&term='+encodeURIComponent(term);
+  let data=null;
+  try{
+    const r=await fetch(api,{mode:'cors'});
+    data=await r.json();
+  }catch(e1){
+    try{ data=await jsonp(api); }
+    catch(e2){ M.busy=false;M.err='Pencarian gagal. Cek koneksi lalu coba lagi.';rerenderShell();return; }
+  }
+  const list=((data&&data.results)||[]).filter(x=>x&&x.previewUrl).map(x=>({
+    name:x.trackName||'tanpa judul',
+    artist:x.artistName||'',
+    url:x.previewUrl,
+    art:(x.artworkUrl100||'').replace('100x100','200x200')
+  }));
+  M.res=list;M.busy=false;
+  if(!list.length)M.err='Tidak ada hasil untuk "'+term+'".';
+  rerenderShell();
+}
+
+function rerenderShell(){const v=document.getElementById('view');if(v)viewShell();}
+
+function refreshPlayer(){
+  const btn=document.getElementById('mplay'),name=document.getElementById('mname'),pl=document.getElementById('player');
+  if(btn)btn.textContent=M.playing?'⏸':'▶';
+  if(name){
+    name.innerHTML=esc(M.now?M.now.name:'pilih lagu')+(M.playing?' <span class="eq"><i></i><i></i><i></i></span>':'');
+    let img=document.getElementById('mart');
+    if(M.now&&M.now.art&&pl){
+      if(!img){img=document.createElement('img');img.id='mart';img.className='part';img.alt='';const info=pl.querySelector('.pinfo');pl.insertBefore(img,info);}
+      if(img.getAttribute('src')!==M.now.art)img.src=M.now.art;
+    }else if(img){img.remove();}
+  }
+}
+
+function playNow(t){
+  M.now={name:t.name+(t.artist?' — '+t.artist:''),url:t.url,art:t.art||''};
+  audio.src=t.url;
+  audio.play().then(()=>{M.playing=true;refreshPlayer();})
+    .catch(()=>{M.playing=false;refreshPlayer();toast('Gagal memutar, coba lagu lain');});
+}
+function playMus(){
+  if(!M.now){
+    const t=M.list[M.i];
+    if(!t)return toast('Playlist kosong, cari lagu dulu');
+    M.now={name:t.name,url:t.url,art:t.art||''};
+    audio.src=t.url;
+  }
+  if(!audio.src&&M.now.url)audio.src=M.now.url;
+  audio.play().then(()=>{M.playing=true;refreshPlayer();})
+    .catch(()=>{M.playing=false;refreshPlayer();toast('Lagu gagal diputar');});
+}
+function pauseMus(){audio.pause();M.playing=false;refreshPlayer();}
+function playIndex(i){
+  const t=M.list[i];if(!t)return;
+  M.i=i;M.now={name:t.name,url:t.url,art:t.art||''};
+  audio.src=t.url;
+  audio.play().then(()=>{M.playing=true;refreshPlayer();})
+    .catch(()=>{M.playing=false;refreshPlayer();toast('Lagu gagal diputar');});
+}
+function nextMus(){if(!M.list.length)return;playIndex((M.i+1)%M.list.length);}
+function prevMus(){if(!M.list.length)return;playIndex((M.i-1+M.list.length)%M.list.length);}
+function addMusic(){
+  const url=prompt('Tempel tautan MP3 langsung:');
+  if(!url)return;
+  if(!/^https?:\/\//.test(url))return toast('Tautan harus http/https');
+  const nm=prompt('Nama lagu:')||url.split('/').pop().replace(/\.mp3.*/i,'');
+  M.list.push({name:nm,url:url});
+  LS.set(K_MUS,M.list);rerenderShell();toast('Lagu ditambahkan');
+}
+audio.addEventListener('timeupdate',()=>{
+  const s=document.getElementById('mseek');
+  if(s&&audio.duration)s.value=audio.currentTime/audio.duration*100;
+});
+audio.addEventListener('ended',()=>nextMus());
+audio.addEventListener('error',()=>{if(M.playing){M.playing=false;refreshPlayer();toast('Lagu tidak bisa dimuat');}});
+
+function downloadApp(){
+  let html;
+  try{
+    const clone=document.documentElement.cloneNode(true);
+    ['#pwa-manifest','#apple-icon','#theme-meta'].forEach(sel=>{
+      const el=clone.querySelector(sel);if(el)el.remove();
+    });
+    html='<!DOCTYPE html>\n'+clone.outerHTML;
+  }catch(e){return toast('Gagal menyiapkan file');}
+
+  const url=URL.createObjectURL(new Blob([html],{type:'text/html'}));
+  try{
+    const a=document.createElement('a');
+    a.href=url;a.download='index.html';
+    document.body.appendChild(a);a.click();a.remove();
+    toast('File siap diunduh');
+  }catch(e){}
+
+  const out=document.getElementById('dlout');
+  if(out){
+    out.innerHTML=`<div class="dlbox">
+      <div>Kalau unduhan tidak jalan:</div>
+      <a class="btn btn-g sm" href="${url}" target="_blank" rel="noopener" style="margin-top:8px">Buka file di tab baru</a>
+      <button class="btn btn-g sm" id="cphtml" style="margin-top:8px">Salin seluruh kode aplikasi</button>
+      <div class="note">Di tab baru, buka menu browser lalu pilih Unduh atau Simpan halaman.</div>
+    </div>`;
+    const b=document.getElementById('cphtml');
+    if(b)b.onclick=()=>copyTxt(html);
+  }
+}
+
+function viewAlat(v){
+  v.innerHTML=`
+  <div class="sec-t">Konverter zalgo</div>
+  <div class="panel">
+    <input class="inp" id="zin" placeholder="Tulis teks, misal: ricostudent">
+    <div class="three">
+      <select class="inp" id="zlv"><option value="4">Ringan</option><option value="10" selected>Sedang</option><option value="22">Brutal</option></select>
+      <button class="btn btn-g sm" id="zgo" style="height:42px">Buat</button>
+    </div>
+    <div class="mono" id="zout" style="min-height:44px">hasil muncul di sini</div>
+    <button class="btn btn-g sm" id="zcp">Salin hasil</button>
+  </div>
+
+  <div class="sec-t">Generator teks invisible</div>
+  <div class="panel">
+    <select class="inp" id="icount"><option value="50">50 karakter</option><option value="200" selected>200 karakter</option><option value="600">600 karakter</option><option value="1500">1500 karakter</option></select>
+    <button class="btn btn-g sm" id="igen">Buat & salin</button>
+    <div class="note">Teks kosong tanpa spasi. Tempel di nama, bio, atau chat.</div>
+  </div>
+
+  <div class="sec-t">Penghitung karakter</div>
+  <div class="panel">
+    <textarea class="ta" id="cct" placeholder="Tempel teks di sini..." style="height:90px"></textarea>
+    <div class="meta"><span id="ccr">0 karakter · 0 baris</span></div>
+  </div>
+
+  <div class="sec-t">Pembuat link wa.me</div>
+  <div class="panel">
+    <input class="inp" id="lnum" placeholder="nomor tujuan, misal 628123456789">
+    <textarea class="ta" id="ltxt" placeholder="isi pesan..." style="height:80px"></textarea>
+    <div class="mono" id="lout" style="min-height:40px;margin-top:9px">link muncul di sini</div>
+    <div class="row2">
+      <button class="btn btn-g sm" id="lcp">Salin link</button>
+      <button class="btn btn-p sm" id="lop">Buka</button>
+    </div>
+  </div>`;
+
+  document.getElementById('zgo').onclick=()=>{
+    const t=document.getElementById('zin').value.trim()||'ricostudent';
+    document.getElementById('zout').textContent=zalgo(t,+document.getElementById('zlv').value);
+  };
+  document.getElementById('zcp').onclick=()=>copyTxt(document.getElementById('zout').textContent,'zout');
+  document.getElementById('igen').onclick=()=>copyTxt('\u200b\u200c\u200d\u2060\ufeff'.repeat(+document.getElementById('icount').value));
+  const cct=document.getElementById('cct');
+  cct.oninput=()=>{document.getElementById('ccr').textContent=cct.value.length+' karakter · '+(cct.value?cct.value.split('\n').length:0)+' baris';};
+  const build=()=>{
+    const n=normNum(document.getElementById('lnum').value);
+    const t=document.getElementById('ltxt').value;
+    document.getElementById('lout').textContent=n.length>=9?('https://wa.me/'+n+'?text='+encodeURIComponent(t)):'link muncul di sini';
+  };
+  document.getElementById('lnum').oninput=build;
+  document.getElementById('ltxt').oninput=build;
+  document.getElementById('lcp').onclick=()=>copyTxt(document.getElementById('lout').textContent,'lout');
+  document.getElementById('lop').onclick=()=>{
+    const l=document.getElementById('lout').textContent;
+    if(l.startsWith('http'))window.open(l,'_blank');else toast('Isi nomor dulu');
+  };
+}
+
+function viewOwner(v){
+  const u=me();if(u.role!=='owner')return v.innerHTML='<div class="empty">Bukan owner.</div>';
+  const a=accs();
+  const total=a.length, aktif=a.filter(x=>x.active&&(!x.exp||x.exp>Date.now())).length, member=a.filter(x=>x.role!=='owner').length;
+  const q=(S.oq||'').toLowerCase();
+  const list=a.filter(x=>x.u.toLowerCase().includes(q));
+
+  v.innerHTML=`
+  <div class="sec-t">Ringkasan</div>
+  <div class="stats">
+    <div class="stat"><b>${total}</b><span>Total</span></div>
+    <div class="stat"><b>${aktif}</b><span>Aktif</span></div>
+    <div class="stat"><b>${member}</b><span>Member</span></div>
+  </div>
+
+  <div class="sec-t">Buat akun baru</div>
+  <div class="panel">
+    <input class="inp" id="nu" placeholder="username baru">
+    <input class="inp" id="np" placeholder="password">
+    <div class="three">
+      <select class="inp" id="npl"><option value="Basic">Paket basic</option><option value="Pro">Paket pro</option><option value="Premium">Paket premium</option></select>
+      <select class="inp" id="nd">
+        <option value="7">7 hari</option><option value="30" selected>30 hari</option><option value="90">90 hari</option><option value="0">permanen</option>
+      </select>
+    </div>
+    <button class="btn btn-p" id="ncreate">Buat akun</button>
+    <div class="note">Hanya owner yang bisa membuat akun. Bagikan username & password ke pembeli.</div>
+  </div>
+
+  <div class="sec-t">Daftar akun</div>
+  <input class="inp" id="oq" placeholder="Cari username..." value="${esc(S.oq||'')}">
+  <div id="alist">
+  ${list.length?list.map(x=>`
+    <div class="acc ${x.active&&(!x.exp||x.exp>Date.now())?'':'off'}">
+      <div class="u">
+        <b>${esc(x.u)}</b>
+        <small>${esc(x.p)} · ${x.role==='owner'?'pemilik':esc(x.plan)+' · '+fmt(x.exp)}</small>
+      </div>
+      ${x.role==='owner'?'<span class="pill own">owner</span>':`<span class="pill ${x.active?'':'dead'}">${x.active?'aktif':'mati'}</span>`}
+      ${x.role==='owner'?'':`
+        <button class="mini" data-tog="${esc(x.u)}" title="aktif/mati">⏻</button>
+        <button class="mini" data-rst="${esc(x.u)}" title="reset password">↺</button>
+        <button class="mini del" data-del="${esc(x.u)}" title="hapus">✕</button>`}
+    </div>`).join(''):`<div class="empty"><div>◌</div>Belum ada akun member.</div>`}
+  </div>
+
+  <div class="sec-t">Cadangan data</div>
+  <div class="panel">
+    <div class="row2">
+      <button class="btn btn-g sm" id="exp">Ekspor JSON</button>
+      <button class="btn btn-g sm" id="imp">Impor JSON</button>
+    </div>
+    <div class="note">Ekspor untuk pindah akun ke HP lain. Simpan file JSON di tempat aman.</div>
+  </div>`;
+
+  document.getElementById('oq').oninput=e=>{S.oq=e.target.value;viewOwner(v);const i=document.getElementById('oq');i.focus();i.setSelectionRange(i.value.length,i.value.length);};
+
+  document.getElementById('ncreate').onclick=()=>{
+    const nu=document.getElementById('nu').value.trim(),np=document.getElementById('np').value;
+    const pl=document.getElementById('npl').value,dd=+document.getElementById('nd').value;
+    if(nu.length<3)return toast('Username minimal 3 karakter');
+    if(np.length<4)return toast('Password minimal 4 karakter');
+    if(accs().some(x=>x.u.toLowerCase()===nu.toLowerCase()))return toast('Username sudah dipakai');
+    const arr=accs();
+    arr.push({u:nu,p:np,role:'member',plan:pl,exp:dd?Date.now()+dd*864e5:null,active:true,created:Date.now()});
+    saveAccs(arr);viewOwner(v);toast('Akun '+nu+' dibuat');
+  };
+
+  document.getElementById('exp').onclick=()=>{
+    const data=JSON.stringify(accs(),null,2);
+    try{
+      const b=new Blob([data],{type:'application/json'});
+      const url=URL.createObjectURL(b);const a2=document.createElement('a');
+      a2.href=url;a2.download='akun-ricostudent.json';a2.click();URL.revokeObjectURL(url);
+      toast('File cadangan diunduh');
+    }catch(e){copyTxt(data);}
+  };
+  document.getElementById('imp').onclick=()=>{
+    const s=prompt('Tempel isi JSON cadangan:');if(!s)return;
+    try{
+      const d=JSON.parse(s);
+      if(!Array.isArray(d))throw 0;
+      saveAccs(d);seed();viewOwner(v);toast('Data dipulihkan');
+    }catch(e){toast('JSON tidak valid');}
+  };
+}
+
+function viewAkun(v){
+  const u=me();
+  v.innerHTML=`
+  <div class="sec-t">Profil</div>
+  <div class="panel" style="display:flex;align-items:center;gap:13px">
+    <div class="av ${u.role==='owner'?'own':''}" style="width:48px;height:48px;font-size:18px;border-radius:15px">${esc(u.u[0].toUpperCase())}</div>
+    <div style="flex:1">
+      <div style="font-size:16px;font-weight:600">${esc(u.u)}</div>
+      <div class="rl ${u.role==='owner'?'own':''}">${u.role==='owner'?'owner · akses penuh':'member'}</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px">
+      <span style="color:#a688c9">Paket</span><span>${u.role==='owner'?'Owner':esc(u.plan)}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:13px">
+      <span style="color:#a688c9">Masa aktif</span><span>${u.role==='owner'?'Tanpa batas':fmt(u.exp)}</span>
+    </div>
+  </div>
+
+  <div class="sec-t">Ganti password</div>
+  <div class="panel">
+    <input class="inp" id="op" type="password" placeholder="password lama">
+    <input class="inp" id="npw" type="password" placeholder="password baru">
+    <button class="btn btn-g sm" id="chg">Simpan password</button>
+  </div>
+
+  <div class="sec-t">Statistik kamu</div>
+  <div class="panel" style="display:flex;justify-content:space-between;font-size:13px">
+    <span style="color:#a688c9">Modul favorit</span><span>${favs().length}</span>
+  </div>
+
+  <div class="sec-t">File aplikasi</div>
+  <button class="btn btn-g sm" id="dl">Unduh file index.html</button>
+  <div id="dlout"></div>
+  <div class="note">File ini yang diunggah ke Netlify Drop untuk dijadikan aplikasi atau APK.</div>
+
+  <button class="btn btn-d" id="out" style="margin-top:18px">Keluar akun</button>
+  <div class="foot">𝙧𝙞𝙘𝙤✗𝙨𝙩𝙪𝙙𝙚𝙣𝙩 ⸸⁶⁶⁶</div>`;
+
+  document.getElementById('dl').onclick=downloadApp;
+  document.getElementById('chg').onclick=()=>{
+    const o=document.getElementById('op').value,n=document.getElementById('npw').value;
+    if(o!==u.p)return toast('Password lama salah');
+    if(n.length<4)return toast('Password baru minimal 4 karakter');
+    const a=accs();const t=a.find(x=>x.u===u.u);t.p=n;saveAccs(a);toast('Password diperbarui');
+    document.getElementById('op').value='';document.getElementById('npw').value='';
+  };
+  document.getElementById('out').onclick=()=>{
+    localStorage.removeItem(K_SES);
+    S={tab:'bug',cat:'all',q:'',favOnly:false,tNums:'',tBug:'lw',tLvl:'sedang',tPre:true,tDone:{}};
+    render();
+  };
+}
+
+function render(){
+  seed();
+  const u=me();
+  if(!u){localStorage.removeItem(K_SES);viewLogin();return;}
+  if(S.tab==='owner'&&u.role!=='owner')S.tab='bug';
+  viewShell();
+}
+
+app.addEventListener('click',e=>{
+  const t=e.target.closest('[data-tab],[data-cat],[data-bug],[data-favbtn],[data-fav],[data-tog],[data-rst],[data-del],[data-tfire]');
+  if(!t)return;
+  if(t.dataset.tab){S.tab=t.dataset.tab;render();return;}
+  if(t.dataset.cat){S.cat=t.dataset.cat;render();return;}
+  if(t.dataset.fav){S.favOnly=!S.favOnly;render();return;}
+  if(t.dataset.favbtn){
+    e.stopPropagation();
+    const id=t.dataset.favbtn,f=favs();
+    const i=f.indexOf(id);
+    if(i<0)f.push(id);else f.splice(i,1);
+    LS.set(K_FAV,f);
+    t.classList.toggle('on');
+    if(S.favOnly)render();
+    return;
+  }
+  if(t.dataset.bug){openBug(t.dataset.bug);return;}
+  if(t.dataset.tfire){fireOne(+t.dataset.tfire);return;}
+  if(t.dataset.tog){
+    const a=accs();const x=a.find(z=>z.u===t.dataset.tog);x.active=!x.active;saveAccs(a);render();return;
+  }
+  if(t.dataset.rst){
+    const nw=prompt('Password baru untuk '+t.dataset.rst+':');
+    if(!nw||nw.length<4)return toast('Minimal 4 karakter');
+    const a=accs();a.find(z=>z.u===t.dataset.rst).p=nw;saveAccs(a);toast('Password direset');return;
+  }
+  if(t.dataset.del){
+    if(!confirm('Hapus akun '+t.dataset.del+'?'))return;
+    saveAccs(accs().filter(z=>z.u!==t.dataset.del));render();toast('Akun dihapus');
+  }
+});
+
+(function setupPWA(){
+  try{
+    const c=document.createElement('canvas');c.width=c.height=512;
+    const x=c.getContext('2d');
+    const g=x.createLinearGradient(0,0,512,512);
+    g.addColorStop(0,'#7c3aed');g.addColorStop(1,'#c026d3');
+    x.fillStyle=g;x.fillRect(0,0,512,512);
+    x.fillStyle='rgba(255,255,255,.95)';
+    x.beginPath();
+    x.moveTo(285,90);x.lineTo(200,250);x.lineTo(258,250);x.lineTo(222,410);
+    x.lineTo(330,225);x.lineTo(268,225);x.closePath();x.fill();
+    const icon=c.toDataURL('image/png');
+
+    const mf={name:'rico student bug wa',short_name:'rico bug',start_url:'.',scope:'.',
+      display:'standalone',orientation:'portrait',background_color:'#0a0512',theme_color:'#7c3aed',
+      icons:[{src:icon,sizes:'512x512',type:'image/png',purpose:'any maskable'},
+             {src:icon,sizes:'192x192',type:'image/png'}]};
+    const blob=new Blob([JSON.stringify(mf)],{type:'application/json'});
+    const l=document.createElement('link');
+    l.id='pwa-manifest';l.rel='manifest';l.href=URL.createObjectURL(blob);
+    (document.head||document.documentElement).appendChild(l);
+
+    const tm=document.createElement('meta');tm.id='theme-meta';tm.name='theme-color';tm.content='#7c3aed';
+    (document.head||document.documentElement).appendChild(tm);
+    const am=document.createElement('meta');am.name='apple-mobile-web-app-capable';am.content='yes';
+    (document.head||document.documentElement).appendChild(am);
+    const at=document.createElement('link');at.id='apple-icon';at.rel='apple-touch-icon';at.href=icon;
+    (document.head||document.documentElement).appendChild(at);
+  }catch(e){}
+})();
+
+render();
+})();
+</script>
